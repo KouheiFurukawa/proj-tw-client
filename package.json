@@ -19,10 +19,11 @@
     "typescript": "^3.8.3",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
     "webpack-serve": "^3.2.0"
   },
   "scripts": {
-    "start": "webpack-serve --config webpack.config.preview.js",
+    "start": "webpack-dev-server --open --mode development --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
     "build:prod": "webpack --config webpack.config.prod.js"
   },
