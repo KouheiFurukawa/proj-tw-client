@@ -13,10 +13,14 @@ function tweet(content: string): void {
     });
 }
 
-function getTweets(id: string, count: number): void {
+export function getTweets(id: string, count: number): any[] | void {
     const params = {screen_name: id, count};
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
+            const out = [];
+            for (let i = 0; i < tweets.length; i++) {
+                out.push({text: tweets[i], user: tweets[i].user.screen_name})
+            }
             return tweets;
         } else {
             console.log(error);
