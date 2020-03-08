@@ -1,5 +1,5 @@
-const twitter = require('twitter');
-const fs = require('fs');
+import twitter from 'twitter';
+import * as fs from 'fs';
 
 const client = new twitter(JSON.parse(fs.readFileSync('secret.json', 'utf-8')));
 
@@ -17,7 +17,7 @@ export function getTweets(id: string, count: number): any[] | void {
     const params = { count, screen_name: id };
     client.get('statuses/user_timeline', params, (error, tweets, response) => {
         if (!error) {
-            const out = [];
+            const out: any = [];
             for (let i = 0; i < tweets.length; i = i + 1) {
                 out.push({ text: tweets[i], user: tweets[i].user.screen_name });
             }
