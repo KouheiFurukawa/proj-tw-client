@@ -12,10 +12,13 @@
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.19.1",
     "ts-loader": "^6.2.1",
     "tslint": "^6.0.0",
     "tslint-config-airbnb": "^5.11.2",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-loader": "^3.5.4",
+    "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.8.3",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
@@ -25,7 +28,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
-    "build:prod": "webpack --config webpack.config.prod.js"
+    "build:prod": "webpack --config webpack.config.prod.js",
+    "lint:fix": "tslint --project tsconfig.dev.json --fix"
   },
   "author": "",
   "license": "ISC"
