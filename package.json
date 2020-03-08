@@ -25,7 +25,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
-    "build:prod": "webpack --config webpack.config.prod.js"
+    "build:prod": "webpack --config webpack.config.prod.js",
+    "lint:fix": "tslint --project tsconfig.dev.json --fix"
   },
   "author": "",
   "license": "ISC"
