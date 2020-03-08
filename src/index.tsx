@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Application from './application';
-import {getTweets} from '../api';
+import application from './application';
+import { getTweets } from '../api';
 
 const tweets = getTweets('akio_utsuroido', 20);
 

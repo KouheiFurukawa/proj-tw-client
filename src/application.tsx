@@ -1,19 +1,18 @@
 import * as React from 'react';
 
-interface tweet {
-    text: string,
-    user: string,
+interface Tweet {
+    text: string;
+    user: string;
 }
 
-interface applicationProps {
-    timeline: tweet[],
+interface ApplicationProps {
+    timeline: Tweet[];
 }
 
 interface State {
 }
 
-
-class Application extends React.Component<applicationProps, State> {
+class Application extends React.Component<ApplicationProps, State> {
     render() {
         return (
             <div>
@@ -26,7 +25,7 @@ class Application extends React.Component<applicationProps, State> {
                     );
                 })}
             </div>
-        )
+        );
     }
 }
 
