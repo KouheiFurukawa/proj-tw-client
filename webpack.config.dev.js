@@ -2,6 +2,7 @@ const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    target: 'node',
     mode: 'development',
     entry: './src/index.tsx',
     devtool: 'inline-source-map',    // デバッグできるように
