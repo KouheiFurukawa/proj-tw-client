@@ -9,4 +9,5 @@ ReactDOM.render(
     <div>
         <Application timeline={tweets ? tweets : []} />
     </div>,
-    document.getElementById('root'));
+    document.getElementById('root'),
+);

@@ -9,14 +9,13 @@ interface ApplicationProps {
     timeline: Tweet[];
 }
 
-interface State {
-}
+interface State {}
 
 class Application extends React.Component<ApplicationProps, State> {
     render() {
         return (
             <div>
-                {this.props.timeline.map((tweet) => {
+                {this.props.timeline.map(tweet => {
                     return (
                         <div>
                             <span>{tweet.user}</span>
