@@ -34,8 +34,8 @@ app.get('/favorites/list', isLogined, (req, res) => {
         });
 });
 
-app.get('/timeline', isLogined, (req, res) => {
-    if (!req.isAuthenticated()) res.redirect('/login');
+app.get('/timeline', (req, res) => {
+    // if (!req.isAuthenticated()) res.redirect('/login');
     client(req)
         .get('statuses/home_timeline', { count: 50 })
         .then(result => {

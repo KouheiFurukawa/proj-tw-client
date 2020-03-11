@@ -7,10 +7,10 @@
     "tslint-plugin-prettier"
   ],
   "rules": {
-    "prettier": true,
-    "ter-indent": [
-      true,
-      4
-    ]
+    "prettier": true
+//    "ter-indent": [
+//      true,
+//      2
+//    ]
   }
 }
