@@ -4,11 +4,15 @@ import { actions } from './actions';
 export interface State {
     tabValue: number;
     textInput: string;
+    timeline: any[];
+    myTimeline: any[];
 }
 
 export const initialState: State = {
     tabValue: 0,
     textInput: '',
+    timeline: [],
+    myTimeline: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
