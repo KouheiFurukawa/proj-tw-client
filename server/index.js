@@ -59,9 +59,9 @@ app.get('/profile', (req, res) => {
         });
 });
 
-app.get('/user_timeline', (req, res) => {
+app.get('/user_timeline/:id', (req, res) => {
     client(req)
-        .get('statuses/user_timeline', { id: req.params.id, count: 50 })
+        .get('statuses/user_timeline', { screen_name: req.params.id, count: 50 })
         .then(result => {
             res.json(result);
         });
@@ -74,6 +74,10 @@ app.get('/logout', (req, res) => {
 
 app.get('/api', (req, res) => {
     res.send({api: 'test'});
+});
+
+app.get('/api_user/:id', (req, res) => {
+    res.send({api: req.params.id});
 });
 
 app.listen(3000, ()=> {

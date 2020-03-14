@@ -29,5 +29,14 @@ export const reducer = reducerWithInitialState(initialState)
         return { ...state };
     })
     .case(actions.successGetTimeline, (state, action) => {
+        return { ...state, timeline: action.result };
+    })
+    .case(actions.requestUserTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.failedGetUserTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.successGetUserTimeline, (state, action) => {
         return { ...state, myTimeline: action.result };
     });
