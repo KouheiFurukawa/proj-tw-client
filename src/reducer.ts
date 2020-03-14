@@ -21,4 +21,13 @@ export const reducer = reducerWithInitialState(initialState)
     })
     .case(actions.changeTab, (state, tabValue) => {
         return { ...state, tabValue };
+    })
+    .case(actions.requestTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.failedGetTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.successGetTimeline, (state, action) => {
+        return { ...state, myTimeline: action.result };
     });
