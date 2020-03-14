@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Handler } from './container/Container';
 import { Tab, Tabs } from '@material-ui/core';
 import { State } from './reducer';
+import { actions } from './actions';
+import { useDispatch } from 'react-redux';
 
 interface OwnProps {}
 
@@ -22,6 +24,9 @@ type MainProps = OwnProps & Handler & State;
 // }
 
 export const Main: React.FC<MainProps> = (props: MainProps) => {
+    const dispatch = useDispatch();
+    dispatch(actions.requestTimeline({}));
+    console.log(actions.requestTimeline.type);
     return (
         <div>
             <Tabs
@@ -34,23 +39,31 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                 <Tab label="my tweet" value={1} />
                 <Tab label="tweet" value={2} />
             </Tabs>
-            {props.tabValue === 0
-                ? props.timeline.map(tweet => {
-                      return (
-                          <div>
-                              <div>{tweet.user.created_at}</div>
-                              <div>{tweet.text}</div>
-                          </div>
-                      );
-                  })
-                : props.myTimeline.map(tweet => {
-                      return (
-                          <div>
-                              <div>{tweet.user.created_at}</div>
-                              <div>{tweet.text}</div>
-                          </div>
-                      );
-                  })}
+            {/*{props.tabValue === 0*/}
+            {/*    ? props.timeline.map(tweet => {*/}
+            {/*          return (*/}
+            {/*              <div>*/}
+            {/*                  <div>{tweet.user.created_at}</div>*/}
+            {/*                  <div>{tweet.text}</div>*/}
+            {/*              </div>*/}
+            {/*          );*/}
+            {/*      })*/}
+            {/*    : props.myTimeline.map(tweet => {*/}
+            {/*          return (*/}
+            {/*              <div>*/}
+            {/*                  <div>{tweet.user.created_at}</div>*/}
+            {/*                  <div>{tweet.text}</div>*/}
+            {/*              </div>*/}
+            {/*          );*/}
+            {/*      })}*/}
+            {props.myTimeline.map(tweet => {
+                return (
+                    <div>
+                        <div>{tweet.user.created_at}</div>
+                        <div>{tweet.text}</div>
+                    </div>
+                );
+            })}
         </div>
     );
 };
