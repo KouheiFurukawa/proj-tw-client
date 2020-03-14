@@ -7,7 +7,9 @@
     "tslint-plugin-prettier"
   ],
   "rules": {
-    "prettier": true
+    "prettier": true,
+    "import-name": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
 //    "ter-indent": [
 //      true,
 //      2

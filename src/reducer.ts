@@ -4,11 +4,15 @@ import { actions } from './actions';
 export interface State {
     tabValue: number;
     textInput: string;
+    timeline: any[];
+    myTimeline: any[];
 }
 
 export const initialState: State = {
     tabValue: 0,
     textInput: '',
+    timeline: [],
+    myTimeline: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
@@ -17,4 +21,22 @@ export const reducer = reducerWithInitialState(initialState)
     })
     .case(actions.changeTab, (state, tabValue) => {
         return { ...state, tabValue };
+    })
+    .case(actions.requestTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.failedGetTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.successGetTimeline, (state, action) => {
+        return { ...state, timeline: action.result };
+    })
+    .case(actions.requestUserTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.failedGetUserTimeline, state => {
+        return { ...state };
+    })
+    .case(actions.successGetUserTimeline, (state, action) => {
+        return { ...state, myTimeline: action.result };
     });

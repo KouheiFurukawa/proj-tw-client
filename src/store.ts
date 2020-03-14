@@ -1,18 +1,23 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
 import { reducer, State } from './reducer';
-import reduxThunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { sagas } from './sagas';
 
-export type AppState = {
-    state: State;
-};
+export type AppState = { state: State };
 
-const storeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export function configureStore(initialState: AppState) {
+    const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-    combineReducers<AppState>({
-        state: reducer,
-    }),
-    storeEnhancers(applyMiddleware(reduxThunk)),
-);
+    const storeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default store;
+    const store = createStore(
+        combineReducers<AppState>({
+            state: reducer,
+        }),
+        initialState,
+        storeEnhancers(applyMiddleware(sagaMiddleware)),
+    );
+
+    sagaMiddleware.run(sagas);
+    return store;
+}
