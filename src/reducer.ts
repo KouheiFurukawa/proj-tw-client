@@ -22,6 +22,15 @@ export const reducer = reducerWithInitialState(initialState)
     .case(actions.changeTab, (state, tabValue) => {
         return { ...state, tabValue };
     })
+    .case(actions.requestPostTweet, (state, content) => {
+        return { ...state };
+    })
+    .case(actions.failedPostTweet, (state, content) => {
+        return { ...state };
+    })
+    .case(actions.successPostTweet, (state, content) => {
+        return { ...state, textInput: '', tabValue: 0 };
+    })
     .case(actions.requestTimeline, state => {
         return { ...state };
     })

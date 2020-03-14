@@ -19,6 +19,7 @@ function* getUserTimelineHandler() {
         const { payload } = yield take('ACTIONS_GET_USER_TIMELINE_STARTED');
         const { result, error } = yield call(ApiClient.getUserTimeline, payload);
         if (result && !error) {
+            yield put(actions.requestTimeline({}));
             yield put(actions.successGetUserTimeline({ result, params: {} }));
         } else {
             yield put(actions.failedGetUserTimeline({ error, params: {} }));
@@ -26,7 +27,22 @@ function* getUserTimelineHandler() {
     }
 }
 
+function* postTweetHandler() {
+    while (true) {
+        const { payload } = yield take('ACTIONS_POST_TWEET_STARTED');
+        console.log(payload);
+        const { result, error } = yield call(ApiClient.postTweet, payload);
+        if (result && !error) {
+            yield put(actions.requestTimeline({}));
+            yield put(actions.successPostTweet({ result, params: payload }));
+        } else {
+            yield put(actions.failedPostTweet({ error, params: payload }));
+        }
+    }
+}
+
 export function* sagas() {
     yield fork(getTimelineHandler);
     yield fork(getUserTimelineHandler);
+    yield fork(postTweetHandler);
 }

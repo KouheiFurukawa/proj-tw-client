@@ -6,6 +6,7 @@ import { Main } from '../Main';
 
 export interface Handler {
     handleOnChangeText(text: string): void;
+    handlePostTweet(content: string): void;
     handleOnChangeTab(value: number): void;
 }
 
@@ -22,6 +23,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         handleOnChangeText(text: string): void {
             dispatch(actions.updateDraft(text));
+        },
+        handlePostTweet(content: string): void {
+            dispatch(actions.requestPostTweet(content));
         },
         handleOnChangeTab(value: number): void {
             dispatch(actions.changeTab(value));
