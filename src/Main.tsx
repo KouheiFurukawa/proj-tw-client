@@ -4,6 +4,7 @@ import { Tab, Tabs, TextField, Button } from '@material-ui/core';
 import { State } from './reducer';
 import { actions } from './actions';
 import { useDispatch } from 'react-redux';
+import { Tweet } from './Tweet';
 
 interface OwnProps {}
 
@@ -30,21 +31,11 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
             </Tabs>
             {props.tabValue === 0 &&
                 props.timeline.map(tweet => {
-                    return (
-                        <div>
-                            <div>{tweet.user.created_at}</div>
-                            <div>{tweet.text}</div>
-                        </div>
-                    );
+                    return <Tweet tweet={tweet} />;
                 })}
             {props.tabValue === 1 &&
                 props.myTimeline.map(tweet => {
-                    return (
-                        <div>
-                            <div>{tweet.user.created_at}</div>
-                            <div>{tweet.text}</div>
-                        </div>
-                    );
+                    return <Tweet tweet={tweet} />;
                 })}
             {props.tabValue === 2 && (
                 <div>
