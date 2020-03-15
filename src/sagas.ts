@@ -30,7 +30,6 @@ function* getUserTimelineHandler() {
 function* postTweetHandler() {
     while (true) {
         const { payload } = yield take('ACTIONS_POST_TWEET_STARTED');
-        console.log(payload);
         const { result, error } = yield call(ApiClient.postTweet, payload);
         if (result && !error) {
             yield put(actions.requestTimeline({}));
@@ -41,8 +40,21 @@ function* postTweetHandler() {
     }
 }
 
+function* getDMHandler() {
+    while (true) {
+        const { payload } = yield take('ACTIONS_GET_DIRECT_MESSAGE_STARTED');
+        const { result, error } = yield call(ApiClient.getDM);
+        if (result && error) {
+            yield put(actions.successGetDM({ result, params: null }));
+        } else {
+            yield put(actions.failedGetDM({ error, params: null }));
+        }
+    }
+}
+
 export function* sagas() {
     yield fork(getTimelineHandler);
     yield fork(getUserTimelineHandler);
     yield fork(postTweetHandler);
+    yield fork(getDMHandler);
 }
