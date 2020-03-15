@@ -5,6 +5,7 @@ const actionCreator = actionCreatorFactory();
 export const getTimeline = actionCreator.async<{}, any[], Error>('ACTIONS_GET_TIMELINE');
 export const getUserTimeline = actionCreator.async<{}, any[], Error>('ACTIONS_GET_USER_TIMELINE');
 export const postTweet = actionCreator.async<string, any[], Error>('ACTIONS_POST_TWEET');
+export const getDM = actionCreator.async<null, any[], Error>('ACTIONS_GET_DIRECT_MESSAGE');
 
 export const actions = {
     changeTab: actionCreator<number>('ACTIONS_CHANGE_TAB'),
@@ -18,4 +19,7 @@ export const actions = {
     requestUserTimeline: getUserTimeline.started,
     failedGetUserTimeline: getUserTimeline.failed,
     successGetUserTimeline: getUserTimeline.done,
+    requestGetDM: getDM.started,
+    failedGetDM: getDM.failed,
+    successGetDM: getDM.done,
 };

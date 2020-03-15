@@ -83,6 +83,15 @@ app.post('/tweet/', (req, res) => {
         .catch(error => console.error(error));
 });
 
+app.get('/direct_message/list', (req, res) => {
+    client(req)
+        .get('direct_messages/events/list', {})
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
 app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');

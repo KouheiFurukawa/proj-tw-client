@@ -16,6 +16,7 @@ const mapStateToProps = (appState: AppState) => {
         textInput: appState.state.textInput,
         timeline: appState.state.timeline,
         myTimeline: appState.state.myTimeline,
+        directMessages: appState.state.directMessages,
     };
 };
 

@@ -4,6 +4,7 @@ import { Tab, Tabs, TextField, Button } from '@material-ui/core';
 import { State } from './reducer';
 import { actions } from './actions';
 import { useDispatch } from 'react-redux';
+import DirectMessage from './DirectMessages';
 
 interface OwnProps {}
 
@@ -13,6 +14,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
     React.useEffect(() => {
         dispatch(actions.requestUserTimeline('Cygnus_x_l'));
         dispatch(actions.requestTimeline({}));
+        dispatch(actions.requestGetDM(null));
     }, []);
 
     const dispatch = useDispatch();
@@ -60,6 +62,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                     </Button>
                 </div>
             )}
+            {props.tabValue === 3 && <DirectMessage />}
         </div>
     );
 };

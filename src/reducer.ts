@@ -6,6 +6,7 @@ export interface State {
     textInput: string;
     timeline: any[];
     myTimeline: any[];
+    directMessages: any[];
 }
 
 export const initialState: State = {
@@ -13,6 +14,7 @@ export const initialState: State = {
     textInput: '',
     timeline: [],
     myTimeline: [],
+    directMessages: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
@@ -48,4 +50,7 @@ export const reducer = reducerWithInitialState(initialState)
     })
     .case(actions.successGetUserTimeline, (state, action) => {
         return { ...state, myTimeline: action.result };
+    })
+    .case(actions.successGetDM, (state, action) => {
+        return { ...state, directMessages: action.result };
     });
