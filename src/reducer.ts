@@ -6,6 +6,7 @@ export interface State {
     textInput: string;
     timeline: any[];
     myTimeline: any[];
+    myFavorites: number[];
 }
 
 export const initialState: State = {
@@ -13,6 +14,7 @@ export const initialState: State = {
     textInput: '',
     timeline: [],
     myTimeline: [],
+    myFavorites: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
@@ -48,4 +50,15 @@ export const reducer = reducerWithInitialState(initialState)
     })
     .case(actions.successGetUserTimeline, (state, action) => {
         return { ...state, myTimeline: action.result };
+    })
+    .case(actions.successGetFavoritesList, (state, action) => {
+        const favorites: number[] = [];
+        action.result.forEach(tweet => {
+            console.log(tweet.id);
+            favorites.push(tweet.id);
+        });
+        return { ...state, myFavorites: favorites };
+    })
+    .case(actions.successLike, (state, action) => {
+        return { ...state };
     });

@@ -22,12 +22,39 @@ export default class ApiClient {
     }
 
     static postTweet(text: string) {
-        console.log(JSON.stringify({ text }));
         return fetch('/tweet/', {
             method: 'POST',
             body: JSON.stringify({ text }),
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                return { result: data };
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
+
+    static getFavoritesList(id: string) {
+        return fetch(`/favorites/list/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                return { result: data };
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
+
+    static like(id: number) {
+        return fetch('/like/', {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: {
+                'Content-Type': 'application/json',
             },
         })
             .then(response => response.json())

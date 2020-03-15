@@ -1,12 +1,24 @@
 import * as React from 'react';
-import { Avatar, Paper, Typography, Grid, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Avatar, Paper, Typography, Grid, IconButton, createStyles, makeStyles, Theme } from '@material-ui/core';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import RepeatIcon from '@material-ui/icons/Repeat';
 import Moment from 'react-moment';
+import { State } from './reducer';
+import { connect } from 'react-redux';
+import { AppState } from './store';
 
 interface OwnProps {
     tweet: any;
 }
 
-type MainProps = OwnProps;
+type TweetProps = OwnProps & Pick<State, 'myFavorites'>;
+
+export const mapStateToProps = (appState: AppState) => {
+    return {
+        myFavorites: appState.state.myFavorites,
+    };
+};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -18,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Tweet: React.FC<MainProps> = (props: MainProps) => {
+export const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
     const classes = useStyles();
 
     return (
@@ -44,6 +56,20 @@ export const Tweet: React.FC<MainProps> = (props: MainProps) => {
                 </Grid>
             </Grid>
             <Typography>{props.tweet.text}</Typography>
+            <span>
+                <IconButton>
+                    {(props.myFavorites && props.myFavorites.indexOf(props.tweet.id)) >= 0 ? (
+                        <FavoriteIcon />
+                    ) : (
+                        <FavoriteBorderIcon />
+                    )}
+                </IconButton>
+                <IconButton>
+                    <RepeatIcon />
+                </IconButton>
+            </span>
         </Paper>
     );
 };
+
+export default connect(mapStateToProps)(Tweet);

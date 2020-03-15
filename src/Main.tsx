@@ -4,7 +4,7 @@ import { Tab, Tabs, TextField, Button } from '@material-ui/core';
 import { State } from './reducer';
 import { actions } from './actions';
 import { useDispatch } from 'react-redux';
-import { Tweet } from './Tweet';
+import Tweet from './Tweet';
 
 interface OwnProps {}
 
@@ -14,6 +14,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
     React.useEffect(() => {
         dispatch(actions.requestUserTimeline('Cygnus_x_l'));
         dispatch(actions.requestTimeline({}));
+        dispatch(actions.requestFavoritesList('Cygnus_x_l'));
     }, []);
 
     const dispatch = useDispatch();
