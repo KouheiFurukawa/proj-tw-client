@@ -49,7 +49,7 @@ export default class ApiClient {
             });
     }
 
-    static like(id: number) {
+    static like(id: string) {
         return fetch('/like/', {
             method: 'POST',
             body: JSON.stringify({ id }),
