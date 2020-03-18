@@ -85,7 +85,7 @@ app.post('/tweet/', (req, res) => {
 
 app.post('/like/', (req, res) => {
     client(req)
-        .post('favorites/create', { status: req.body.id })
+        .post('favorites/create', { id: req.body.id })
         .then(result => {
             res.json(result);
         })

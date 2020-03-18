@@ -5,8 +5,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import Moment from 'react-moment';
 import { State } from './reducer';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { AppState } from './store';
+import { actions } from './actions';
 
 interface OwnProps {
     tweet: any;
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         <Paper className={classes.paper} elevation={3}>
@@ -57,15 +59,22 @@ export const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
             </Grid>
             <Typography>{props.tweet.text}</Typography>
             <span>
-                <IconButton>
-                    {(props.myFavorites && props.myFavorites.indexOf(props.tweet.id)) >= 0 ? (
-                        <FavoriteIcon />
+                <IconButton onClick={e => dispatch(actions.requestLike(props.tweet.id_str))}>
+                    {(props.myFavorites && props.myFavorites.indexOf(props.tweet.id_str)) >= 0 ? (
+                        <React.Fragment>
+                            <FavoriteIcon />
+                            {props.tweet.favorite_count}
+                        </React.Fragment>
                     ) : (
-                        <FavoriteBorderIcon />
+                        <React.Fragment>
+                            <FavoriteBorderIcon />
+                            {props.tweet.favorite_count}
+                        </React.Fragment>
                     )}
                 </IconButton>
                 <IconButton>
                     <RepeatIcon />
+                    <span>{props.tweet.retweet_count}</span>
                 </IconButton>
             </span>
         </Paper>
