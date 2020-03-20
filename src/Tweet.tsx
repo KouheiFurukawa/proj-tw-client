@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { Avatar, Paper, Typography, Grid, IconButton, createStyles, makeStyles, Theme } from '@material-ui/core';
+import {
+    colors,
+    Avatar,
+    Paper,
+    Typography,
+    Grid,
+    IconButton,
+    createStyles,
+    makeStyles,
+    Theme,
+} from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -34,6 +44,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const favCount = props.tweet.retweeted_status
+        ? props.tweet.retweeted_status.favorite_count
+        : props.tweet.favorite_count;
+    const rtCount = props.tweet.retweeted_status
+        ? props.tweet.retweeted_status.retweet_count
+        : props.tweet.retweet_count;
 
     return (
         <Paper className={classes.paper} elevation={3}>
@@ -63,18 +79,27 @@ export const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
                     {(props.myFavorites && props.myFavorites.indexOf(props.tweet.id_str)) >= 0 ? (
                         <React.Fragment>
                             <FavoriteIcon />
-                            {props.tweet.favorite_count}
+                            {favCount}
                         </React.Fragment>
                     ) : (
                         <React.Fragment>
                             <FavoriteBorderIcon />
-                            {props.tweet.favorite_count}
+                            {favCount}
                         </React.Fragment>
                     )}
                 </IconButton>
-                <IconButton>
-                    <RepeatIcon />
-                    <span>{props.tweet.retweet_count}</span>
+                <IconButton onClick={e => dispatch(actions.requestRetweet(props.tweet.id_str))}>
+                    {props.tweet.retweeted ? (
+                        <React.Fragment>
+                            <RepeatIcon style={{ color: colors.green[500] }} />
+                            {rtCount}
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <RepeatIcon />
+                            {rtCount}
+                        </React.Fragment>
+                    )}
                 </IconButton>
             </span>
         </Paper>

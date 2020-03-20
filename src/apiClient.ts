@@ -65,4 +65,21 @@ export default class ApiClient {
                 return { error };
             });
     }
+
+    static retweet(id: string) {
+        return fetch('/retweet/', {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                return { result: data };
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
 }

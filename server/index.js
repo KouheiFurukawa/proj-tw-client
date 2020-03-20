@@ -92,6 +92,15 @@ app.post('/like/', (req, res) => {
         .catch(error => console.error(error));
 });
 
+app.post('/retweet/', (req, res) => {
+    client(req)
+        .post(`statuses/retweet/${req.body.id}`, {})
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
 app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');

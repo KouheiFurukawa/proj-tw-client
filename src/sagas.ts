@@ -64,10 +64,25 @@ function* likeHandler() {
     }
 }
 
+function* retweetHandler() {
+    while (true) {
+        const { payload } = yield take('ACTIONS_RETWEET_STARTED');
+        const { result, error } = yield call(ApiClient.retweet, payload);
+        if (result && !error) {
+            yield put(actions.requestTimeline({}));
+            yield put(actions.requestUserTimeline('Cygnus_x_l'));
+            yield put(actions.successRetweet({ result, params: payload }));
+        } else {
+            yield put(actions.failedRetweet({ error, params: payload }));
+        }
+    }
+}
+
 export function* sagas() {
     yield fork(getTimelineHandler);
     yield fork(getUserTimelineHandler);
     yield fork(postTweetHandler);
     yield fork(getFavoritesListHandler);
     yield fork(likeHandler);
+    yield fork(retweetHandler);
 }
