@@ -4,6 +4,7 @@ import { actions } from './actions';
 export interface State {
     tabValue: number;
     textInput: string;
+    searchInput: string;
     timeline: any[];
     myTimeline: any[];
     myFavorites: string[];
@@ -13,6 +14,7 @@ export interface State {
 export const initialState: State = {
     tabValue: 0,
     textInput: '',
+    searchInput: '',
     timeline: [],
     myTimeline: [],
     myFavorites: [],
@@ -65,5 +67,8 @@ export const reducer = reducerWithInitialState(initialState)
         return { ...state, myFavorites: newFavorites };
     })
     .case(actions.successSearch, (state, action) => {
-        return { ...state, searchResult: action.result };
+        return { ...state, searchResult: action.result.results };
+    })
+    .case(actions.changeSearch, (state, text) => {
+        return { ...state, searchInput: text };
     });

@@ -5,6 +5,7 @@ import { State } from './reducer';
 import { actions } from './actions';
 import { useDispatch } from 'react-redux';
 import Tweet from './Tweet';
+import Search from './Search';
 
 interface OwnProps {}
 
@@ -29,14 +30,15 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                 <Tab label="timeline" value={0} />
                 <Tab label="my tweet" value={1} />
                 <Tab label="tweet" value={2} />
+                <Tab label="search" value={3} />
             </Tabs>
             {props.tabValue === 0 &&
                 props.timeline.map(tweet => {
-                    return <Tweet tweet={tweet} />;
+                    return <Tweet key={tweet.id} tweet={tweet} />;
                 })}
             {props.tabValue === 1 &&
                 props.myTimeline.map(tweet => {
-                    return <Tweet tweet={tweet} />;
+                    return <Tweet key={tweet.id} tweet={tweet} />;
                 })}
             {props.tabValue === 2 && (
                 <div>
@@ -52,6 +54,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                     </Button>
                 </div>
             )}
+            {props.tabValue === 3 && <Search />}
         </div>
     );
 };

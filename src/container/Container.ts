@@ -14,9 +14,11 @@ export const mapStateToProps = (appState: AppState) => {
     return {
         tabValue: appState.state.tabValue,
         textInput: appState.state.textInput,
+        searchInput: appState.state.searchInput,
         timeline: appState.state.timeline,
         myTimeline: appState.state.myTimeline,
         myFavorites: appState.state.myFavorites,
+        searchResult: appState.state.searchResult,
     };
 };
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const Twitter = require('twitter');
+const request = require('request');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 
@@ -103,7 +104,7 @@ app.post('/retweet/', (req, res) => {
 
 app.post('/search/', (req, res) => {
     client(req)
-        .post(`search/${req.body.product}/dev`, { query: req.body.query })
+        .get(`tweets/search/${req.body.product}/dev2.json`, { query: req.body.query })
         .then(result => {
             res.json(result);
         })

@@ -8,11 +8,14 @@ export const postTweet = actionCreator.async<string, any[], Error>('ACTIONS_POST
 export const getFavoritesList = actionCreator.async<string, any[], Error>('ACTIONS_GET_FAVORITES_LIST');
 export const like = actionCreator.async<string, any[], Error>('ACTIONS_LIKE');
 export const retweet = actionCreator.async<string, any[], Error>('ACTIONS_RETWEET');
-export const search = actionCreator.async<{ query: string; product: string }, any[], Error>('ACTIONS_SEARCH');
+export const search = actionCreator.async<{ query: string; product: string }, { results: any[] }, Error>(
+    'ACTIONS_SEARCH',
+);
 
 export const actions = {
     changeTab: actionCreator<number>('ACTIONS_CHANGE_TAB'),
     updateDraft: actionCreator<string>('ACTIONS_UPDATE_DRAFT'),
+    changeSearch: actionCreator<string>('ACTIONS_CHANGE_SEARCH'),
     requestPostTweet: postTweet.started,
     failedPostTweet: postTweet.failed,
     successPostTweet: postTweet.done,
