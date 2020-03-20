@@ -101,6 +101,15 @@ app.post('/retweet/', (req, res) => {
         .catch(error => console.error(error));
 });
 
+app.post('/search/', (req, res) => {
+    client(req)
+        .post(`search/${req.body.product}/dev`, { query: req.body.query })
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
 app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');
