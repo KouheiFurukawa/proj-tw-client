@@ -33,9 +33,9 @@ const isLogined = (req, res, next) => {
     }
 };
 
-app.get('/favorites/list', isLogined, (req, res) => {
+app.get('/favorites/list/:id', (req, res) => {
     client(req)
-        .get('favorites/list', {})
+        .get('favorites/list', { screen_name: req.params.id })
         .then(tweet => {
             res.json(tweet);
         });
@@ -77,6 +77,24 @@ app.get('/user_timeline/:id', (req, res) => {
 app.post('/tweet/', (req, res) => {
     client(req)
         .post('statuses/update', { status: req.body.text })
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
+app.post('/like/', (req, res) => {
+    client(req)
+        .post('favorites/create', { id: req.body.id })
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
+app.post('/retweet/', (req, res) => {
+    client(req)
+        .post(`statuses/retweet/${req.body.id}`, {})
         .then(result => {
             res.json(result);
         })

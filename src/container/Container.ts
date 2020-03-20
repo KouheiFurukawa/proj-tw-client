@@ -10,12 +10,13 @@ export interface Handler {
     handleOnChangeTab(value: number): void;
 }
 
-const mapStateToProps = (appState: AppState) => {
+export const mapStateToProps = (appState: AppState) => {
     return {
         tabValue: appState.state.tabValue,
         textInput: appState.state.textInput,
         timeline: appState.state.timeline,
         myTimeline: appState.state.myTimeline,
+        myFavorites: appState.state.myFavorites,
     };
 };
 
