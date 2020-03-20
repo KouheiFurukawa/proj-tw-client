@@ -82,4 +82,21 @@ export default class ApiClient {
                 return { error };
             });
     }
+
+    static search(params: { query: string; product: string }) {
+        return fetch('/search/', {
+            method: 'POST',
+            body: JSON.stringify({ ...params }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                return { result: data };
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
 }

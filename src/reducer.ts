@@ -7,6 +7,7 @@ export interface State {
     timeline: any[];
     myTimeline: any[];
     myFavorites: string[];
+    searchResult: any[];
 }
 
 export const initialState: State = {
@@ -15,6 +16,7 @@ export const initialState: State = {
     timeline: [],
     myTimeline: [],
     myFavorites: [],
+    searchResult: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
@@ -61,4 +63,7 @@ export const reducer = reducerWithInitialState(initialState)
     .case(actions.successLike, (state, action) => {
         const newFavorites: string[] = state.myFavorites.concat(action.params);
         return { ...state, myFavorites: newFavorites };
+    })
+    .case(actions.successSearch, (state, action) => {
+        return { ...state, searchResult: action.result };
     });
