@@ -78,6 +78,18 @@ function* retweetHandler() {
     }
 }
 
+function* searchHandler() {
+    while (true) {
+        const { payload } = yield take('ACTIONS_SEARCH_STARTED');
+        const { result, error } = yield call(ApiClient.search, payload);
+        if (result && !error) {
+            yield put(actions.successSearch({ result, params: payload }));
+        } else {
+            yield put(actions.failedSearch({ error, params: payload }));
+        }
+    }
+}
+
 export function* sagas() {
     yield fork(getTimelineHandler);
     yield fork(getUserTimelineHandler);
@@ -85,4 +97,5 @@ export function* sagas() {
     yield fork(getFavoritesListHandler);
     yield fork(likeHandler);
     yield fork(retweetHandler);
+    yield fork(searchHandler);
 }

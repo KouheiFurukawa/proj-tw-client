@@ -4,17 +4,21 @@ import { actions } from './actions';
 export interface State {
     tabValue: number;
     textInput: string;
+    searchInput: string;
     timeline: any[];
     myTimeline: any[];
     myFavorites: string[];
+    searchResult: any[];
 }
 
 export const initialState: State = {
     tabValue: 0,
     textInput: '',
+    searchInput: '',
     timeline: [],
     myTimeline: [],
     myFavorites: [],
+    searchResult: [],
 };
 
 export const reducer = reducerWithInitialState(initialState)
@@ -61,4 +65,10 @@ export const reducer = reducerWithInitialState(initialState)
     .case(actions.successLike, (state, action) => {
         const newFavorites: string[] = state.myFavorites.concat(action.params);
         return { ...state, myFavorites: newFavorites };
+    })
+    .case(actions.successSearch, (state, action) => {
+        return { ...state, searchResult: action.result.results };
+    })
+    .case(actions.changeSearch, (state, text) => {
+        return { ...state, searchInput: text };
     });

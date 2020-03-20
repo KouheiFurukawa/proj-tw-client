@@ -1,5 +1,6 @@
 const express = require('express');
 const Twitter = require('twitter');
+const request = require('request');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 
@@ -95,6 +96,15 @@ app.post('/like/', (req, res) => {
 app.post('/retweet/', (req, res) => {
     client(req)
         .post(`statuses/retweet/${req.body.id}`, {})
+        .then(result => {
+            res.json(result);
+        })
+        .catch(error => console.error(error));
+});
+
+app.post('/search/', (req, res) => {
+    client(req)
+        .get(`tweets/search/${req.body.product}/dev2.json`, { query: req.body.query })
         .then(result => {
             res.json(result);
         })
