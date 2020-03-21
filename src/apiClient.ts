@@ -99,4 +99,15 @@ export default class ApiClient {
                 return { error };
             });
     }
+
+    static logout() {
+        return fetch('/logout/')
+            .then(response => response.json())
+            .then(data => {
+                return { result: data };
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
 }

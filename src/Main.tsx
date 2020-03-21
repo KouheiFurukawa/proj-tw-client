@@ -16,6 +16,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
         dispatch(actions.requestUserTimeline('Cygnus_x_l'));
         dispatch(actions.requestTimeline({}));
         dispatch(actions.requestFavoritesList('Cygnus_x_l'));
+        console.log(props);
     }, []);
 
     const dispatch = useDispatch();
@@ -50,6 +51,9 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                         onChange={e => props.handleOnChangeText(e.target.value)}
                     />
                     <Button variant="contained" color="primary" onClick={e => props.handlePostTweet(props.textInput)}>
+                        Tweet
+                    </Button>
+                    <Button variant="contained" color="primary" href="/logout">
                         Tweet
                     </Button>
                 </div>
