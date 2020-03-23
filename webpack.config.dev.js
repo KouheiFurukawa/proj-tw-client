@@ -115,11 +115,16 @@ module.exports = {
                 secure: false,
                 logLevel: 'debug'
             },
-            // '/login/**': {
-            //     target: 'http://localhost:3000',
-            //     secure: false,
-            //     logLevel: 'debug'
-            // }
+            '/login/**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            },
+            '/callback**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            }
         },
     },
 };

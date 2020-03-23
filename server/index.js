@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const app = express();
 
 require('dotenv').config();
-
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,9 +18,9 @@ app.use(function(req, res, next) {
 });
 app.use(
     require('express-session')({
-        secret: 'super-secret-key',
+        secret: 'secret',
         resave: true,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: {
             secure: 'auto',
             maxage: 1000 * 60 * 30
@@ -36,10 +35,9 @@ passport.use(
         {
             consumerKey: process.env.CONSUMERKEY,
             consumerSecret: process.env.CONSUMERSECRET,
-            callbackURL: 'http://localhost:3000/callback'
+            callbackURL: '',
         },
         function(token, tokenSecret, profile, done) {
-            console.log(token, tokenSecret);
             profile.access_token = token;
             profile.token_secret = tokenSecret;
             return done(null, profile);
@@ -63,24 +61,31 @@ const isLogined = (req, res, next) => {
 
 app.get('/auth', passport.authenticate('twitter'));
 app.get('/callback', passport.authenticate('twitter'), (req, res) => {
-    res.json({ user: req.user });
+    res.redirect('/');
 });
 
-app.get('/favorites/list/:id', isLogined, (req, res) => {
+app.get('/favorites/list/:id', (req, res) => {
+    if (!req.isAuthenticated()) {
+        res.redirect( '/login');
+    }
     client(req)
         .get('favorites/list', { screen_name: req.params.id })
         .then(tweet => {
             res.json(tweet);
-        });
+        })
+        .catch(error => console.error(error));
 });
 
-app.get('/timeline', isLogined, (req, res) => {
-    if (!req.isAuthenticated()) res.redirect('/login');
+app.get('/timeline', (req, res) => {
+    if (!req.isAuthenticated()) {
+        res.redirect( '/login');
+    }
     client(req)
         .get('statuses/home_timeline', { count: 50 })
         .then(result => {
             res.json(result);
-        });
+        })
+        .catch(error => console.error(error));
 });
 
 app.get('/mentions', isLogined, (req, res) => {
@@ -100,11 +105,15 @@ app.get('/profile', isLogined, (req, res) => {
 });
 
 app.get('/user_timeline/:id', isLogined, (req, res) => {
+    if (!req.isAuthenticated()) {
+        res.redirect( '/login');
+    }
     client(req)
         .get('statuses/user_timeline', { screen_name: req.params.id, count: 50 })
         .then(result => {
             res.json(result);
-        });
+        })
+        .catch(error => console.error(error));
 });
 
 app.post('/tweet/', isLogined, (req, res) => {
@@ -143,9 +152,13 @@ app.post('/search/', isLogined, (req, res) => {
         .catch(error => console.error(error));
 });
 
-app.get('/logout', (req, res) => {
+app.get('/logout/', (req, res) => {
     req.logout();
-    res.redirect('/login');
+    res.redirect('http://localhost:8080/login.html');
+});
+
+app.get('/login/', (req, res) => {
+    res.send({api: 'test'});
 });
 
 app.get('/api', (req, res) => {
@@ -156,9 +169,6 @@ app.listen(3000, ()=> {
     console.log('server running');
 });
 
-// let client = req => {
-//     return new Twitter(JSON.parse(fs.readFileSync('secret.json', 'utf-8')));
-// };
 
 let client = req => {
     return new Twitter({
@@ -170,6 +180,6 @@ let client = req => {
 };
 
 module.exports = {
-    path: '/server',
+    path: '/',
     handler: app
 };

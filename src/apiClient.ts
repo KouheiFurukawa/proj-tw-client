@@ -110,4 +110,14 @@ export default class ApiClient {
                 return { error };
             });
     }
+
+    static login() {
+        return fetch('/login/')
+            .then(data => {
+                window.location.href = 'http://localhost:8080/login.html';
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
 }

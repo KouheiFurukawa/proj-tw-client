@@ -18,6 +18,9 @@ function* getUserTimelineHandler() {
     while (true) {
         const { payload } = yield take('ACTIONS_GET_USER_TIMELINE_STARTED');
         const { result, error } = yield call(ApiClient.getUserTimeline, payload);
+        if (result.status === 401) {
+            yield call(ApiClient.login);
+        }
         if (result && !error) {
             yield put(actions.requestTimeline({}));
             yield put(actions.successGetUserTimeline({ result, params: {} }));
