@@ -53,7 +53,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                     <Button variant="contained" color="primary" onClick={e => props.handlePostTweet(props.textInput)}>
                         Tweet
                     </Button>
-                    <Button variant="contained" color="primary" href="/logout">
+                    <Button variant="contained" color="primary" href="http://localhost:3000/logout">
                         Tweet
                     </Button>
                 </div>
