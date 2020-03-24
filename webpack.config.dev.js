@@ -5,7 +5,6 @@ module.exports = {
     mode: 'development',
     entry: {
         main: './src/index.tsx',
-        login: './src/login.tsx',
     },
     devtool: 'inline-source-map',    // デバッグできるように
     module: {
@@ -40,28 +39,16 @@ module.exports = {
         filename: 'static/js/[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    optimization: {
-        splitChunks: {
-            name: 'vendor',
-            chunks: 'initial',
-        }
-    },
     plugins: [
         new htmlWebpackPlugin({
             chunks: ['main'],
             filename: "index.html",
             template: "index.html"
-        }),
-        new htmlWebpackPlugin({
-            chunks: ['login'],
-            filename: "login.html",
-            template: "login.html"
-        }),
+        })
     ],
     devServer: {
         historyApiFallback: true,
         inline: true,
-        open: true,
         host: 'localhost',
         port: 8080,
         proxy: {
@@ -120,7 +107,7 @@ module.exports = {
                 secure: false,
                 logLevel: 'debug'
             },
-            '/callback**': {
+            '/callback_server**': {
                 target: 'http://localhost:3000',
                 secure: false,
                 logLevel: 'debug'
