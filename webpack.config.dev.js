@@ -2,9 +2,10 @@ const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    target: 'node',
     mode: 'development',
-    entry: './src/index.tsx',
+    entry: {
+        main: './src/index.tsx',
+    },
     devtool: 'inline-source-map',    // デバッグできるように
     module: {
         rules: [
@@ -35,18 +36,19 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        filename: 'static/js/bundle.js',
+        filename: 'static/js/[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
         new htmlWebpackPlugin({
+            chunks: ['main'],
+            filename: "index.html",
             template: "index.html"
         })
     ],
     devServer: {
         historyApiFallback: true,
         inline: true,
-        open: true,
         host: 'localhost',
         port: 8080,
         proxy: {
@@ -86,6 +88,26 @@ module.exports = {
                 logLevel: 'debug'
             },
             '/search/**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            },
+            '/logout/**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            },
+            '/auth/**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            },
+            '/login/**': {
+                target: 'http://localhost:3000',
+                secure: false,
+                logLevel: 'debug'
+            },
+            '/callback_server**': {
                 target: 'http://localhost:3000',
                 secure: false,
                 logLevel: 'debug'

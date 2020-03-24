@@ -19,6 +19,7 @@ export const mapStateToProps = (appState: AppState) => {
         myTimeline: appState.state.myTimeline,
         myFavorites: appState.state.myFavorites,
         searchResult: appState.state.searchResult,
+        myAccount: appState.state.myAccount,
     };
 };
 
