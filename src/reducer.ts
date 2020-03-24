@@ -9,6 +9,12 @@ export interface State {
     myTimeline: any[];
     myFavorites: string[];
     searchResult: any[];
+    myAccount: {
+        idStr: string;
+        name: string;
+        screenName: string;
+        profileImageUrl: string;
+    };
 }
 
 export const initialState: State = {
@@ -19,6 +25,12 @@ export const initialState: State = {
     myTimeline: [],
     myFavorites: [],
     searchResult: [],
+    myAccount: {
+        idStr: '',
+        name: '',
+        screenName: '',
+        profileImageUrl: '',
+    },
 };
 
 export const reducer = reducerWithInitialState(initialState)
