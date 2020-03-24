@@ -114,7 +114,19 @@ export default class ApiClient {
     static login() {
         return fetch('/login/')
             .then(data => {
-                window.location.href = 'http://localhost:8080/login.html';
+                window.location.href = 'http://localhost:8080/login';
+            })
+            .catch(error => {
+                return { error };
+            });
+    }
+
+    static callback(params) {
+        return fetch(`/callback_server${params}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('callback', data);
+                return { result: data.user._json };
             })
             .catch(error => {
                 return { error };

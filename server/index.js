@@ -55,18 +55,22 @@ const isLogined = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     } else {
+        console.log('not logined');
         res.json({ url: '/login', status: 401 });
     }
 };
 
 app.get('/auth', passport.authenticate('twitter'));
-app.get('/callback', passport.authenticate('twitter'), (req, res) => {
-    res.redirect('/');
+
+app.get('/callback_server', passport.authenticate('twitter'), (req, res) => {
+    console.log(req.user);
+    res.json({ user: req.user });
 });
 
-app.get('/favorites/list/:id', (req, res) => {
+app.get('/favorites/list/:id', isLogined, (req, res) => {
     if (!req.isAuthenticated()) {
-        res.redirect( '/login');
+        console.log('redirect');
+        res.redirect('/login');
     }
     client(req)
         .get('favorites/list', { screen_name: req.params.id })
@@ -76,9 +80,10 @@ app.get('/favorites/list/:id', (req, res) => {
         .catch(error => console.error(error));
 });
 
-app.get('/timeline', (req, res) => {
+app.get('/timeline', isLogined, (req, res) => {
     if (!req.isAuthenticated()) {
-        res.redirect( '/login');
+        console.log('redirect');
+        res.redirect('/login');
     }
     client(req)
         .get('statuses/home_timeline', { count: 50 })
@@ -106,7 +111,8 @@ app.get('/profile', isLogined, (req, res) => {
 
 app.get('/user_timeline/:id', isLogined, (req, res) => {
     if (!req.isAuthenticated()) {
-        res.redirect( '/login');
+        console.log('redirect');
+        res.redirect('/login');
     }
     client(req)
         .get('statuses/user_timeline', { screen_name: req.params.id, count: 50 })
@@ -154,7 +160,7 @@ app.post('/search/', isLogined, (req, res) => {
 
 app.get('/logout/', (req, res) => {
     req.logout();
-    res.redirect('http://localhost:8080/login.html');
+    res.redirect('http://localhost:8080/login');
 });
 
 app.get('/login/', (req, res) => {

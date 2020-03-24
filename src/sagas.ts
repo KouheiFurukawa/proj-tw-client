@@ -6,6 +6,9 @@ function* getTimelineHandler() {
     while (true) {
         const { payload } = yield take('ACTIONS_GET_TIMELINE_STARTED');
         const { result, error } = yield call(ApiClient.getMyTimeline);
+        if (result.status === 401) {
+            yield call(ApiClient.login);
+        }
         if (result && !error) {
             yield put(actions.successGetTimeline({ result, params: {} }));
         } else {
@@ -47,6 +50,9 @@ function* getFavoritesListHandler() {
     while (true) {
         const { payload } = yield take('ACTIONS_GET_FAVORITES_LIST_STARTED');
         const { result, error } = yield call(ApiClient.getFavoritesList, payload);
+        if (result.status === 401) {
+            yield call(ApiClient.login);
+        }
         if (result && !error) {
             yield put(actions.successGetFavoritesList({ result, params: payload }));
         } else {
